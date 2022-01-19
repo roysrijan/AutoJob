@@ -1,0 +1,151 @@
+.footer {
+  background-color: #303030;
+  padding: 40px 0 0;
+  color: #fff;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    margin: 17px 0;
+    p {
+      margin: 0;
+      margin-left: 8px;
+      font-size: 18px;
+    }
+    .p1{
+        margin-left: 0;
+        padding-right: 136px;
+    }
+    b {
+      color: #3ec0b9;
+    }
+  }
+}
+.footerBox1Icon{
+    margin-right: 8px !important;
+}
+.footerBoxServices{
+  h2{
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+  span{
+    display: flex;
+    margin-top: 17px;
+  }
+  ul{
+    width: 50%;
+  }
+  li{
+    a{
+      color:#fff;
+      text-decoration: unset;
+    }
+  }
+}
+.newsletterForm{
+ display: flex;
+ margin-top: 42px;
+input{
+  background-color: #C4C4C4;
+  border: unset;
+  height: 40px;
+  padding: 0 8px;
+  font-size: 14px;
+  width: 80%;
+  &:focus{
+    outline: unset;
+  }
+}
+ 
+  button{
+    height: 40px;
+    background-color: #fff;
+    border: none;
+    border-radius: unset  ;
+    margin-left: 3px;
+    img{
+      position: relative;
+      top:-1px;
+    }
+    &:focus{
+      background-color: #fff;
+      box-shadow: unset;
+    }
+    &:hover{
+      background-color: #fff;
+    }
+  }
+}
+
+.newsletterForm input:focus{
+  background-color: #C4C4C4 !important;
+  box-shadow: unset !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+.newsletterForm input::placeholder {
+  color: #fff !important;
+  opacity: 1;
+}
+.inputStyleForHomeSearch::placeholder{
+  color: rgb(162, 162, 162) !important;
+}
+.inputStyleForHomeSearch:focus{
+  color: #000 !important;
+}
+.socialWrap{
+  margin-top:45px;
+  h2{
+    margin-bottom: 20px;
+  }
+ div{
+   display: flex;
+   
+   
+ }
+  a{
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF4F57;
+    margin-right: 15px;
+    transition: all 0.3s ease 0s;
+    &:hover{
+      background-color: #88373b;
+    }
+  }
+}
+.copyRight{
+  text-align: center;
+  margin-top: 50px;
+  font-size: 14px;
+}
+
+@media(max-width:1024px){
+  .footer{
+    padding: 70px 0 60px;
+}
+}
+@media(max-width:800px){
+  .footerBoxServices span ul:last-child{
+padding-left: 0;
+  }
+  .footerBoxServices{
+    margin-top: 30px;
+  }
+ 
+}
+@media(max-width:767px){
+  .footer{
+    padding: 60px 3px;
+  }
+
+}
