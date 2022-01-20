@@ -34,7 +34,7 @@ export default function Header() {
              
               <Nav.Link href="#home">About Us</Nav.Link>
               <Nav.Link href="/contactus">Posts</Nav.Link>
-              <Nav.Link href="/contactus">Jobs</Nav.Link>
+              <Nav.Link href="/jobs">Jobs</Nav.Link>
               <Nav.Link href="/contactus">Contact Us</Nav.Link>
             </Nav>
           </Navbar.Collapse>

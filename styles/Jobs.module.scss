@@ -1,0 +1,105 @@
+.jobsBanner{
+    position: relative;
+    overflow: hidden;
+    margin-top: 75px;
+    &:after{
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.583);
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+.innerpageBannerText{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    h1{
+        color: #fff;
+        margin: 0;
+    }
+    p{
+        color: #FF4F57;
+        text-align: center;
+        margin: 0;
+    }
+}
+
+.searchBarWrap{
+    background-color: #FF4F57;
+    padding: 30px 15px;
+  }
+  .searchBarInnerBox{
+    input{
+      width: 100%;
+      border: none;
+      height: 100%;
+      padding-left: 15px;
+     // background-color: red;
+    }
+
+    select{
+        width: 100%;
+        border: none;
+        margin-left: 10px;
+    }
+    a{
+      width: 100%;
+    }
+  }
+  .searchBarInnerBox{
+    background-color: #fff;
+    /* height: 52px; */
+    padding:4px 6px 4px 18px;
+    border-radius: 7px;
+    .borright{
+      border-right: 1px solid #e0ecf5!important;
+    }
+  }
+  .searchBarIcons{
+   display: flex;
+   align-items: center;
+   flex-direction: row;
+    img{
+        width: 20px;
+        opacity: 0.6;
+        position: relative;
+        top: -8px;
+     
+    }
+  }
+
+  .sectionTitle{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    h2{
+      text-transform: uppercase;
+      margin: 0;
+    }
+  }
+
+  .sectionTitleWhite{
+    h2{
+      color: #fff;
+    }
+    p{
+      color: #fff;
+    }
+}
+
+.jobsOptions{
+    width: 100%;
+    padding-right: 10px;
+    h3{
+        font-size: 11px;
+        margin: 0;
+        margin-left: 14px;
+        color: #afa9a9;
+    }
+}
