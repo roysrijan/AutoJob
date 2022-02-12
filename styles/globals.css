@@ -21,6 +21,8 @@ import googleStreetviewImg from "../public/images/google-street-header-banner.pn
  */
  @import url("https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400&family=Rubik:wght@400;500;600;700&display=swap");
 
+ @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
  html,
 body {
   padding: 0;
@@ -126,4 +128,58 @@ p {
 }
 .navbar-brand h2{
   color: red;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #838383;
+}
+button.submit-bt.btn.btn-primary {
+  background: #FF4F57;
+  border: none;
+  height: 45px;
+  border-radius: 80px;
+  text-transform: uppercase;
+  font-size: 20px;
+  width: 181px;
+  margin: 30px auto 15px;
+  display: block;
+}
+.form-control{
+  height: 46px;
+}
+
+.adminDashboardTableBox{
+  margin-top: 100px;
+}
+.react-tabs__tab {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  width: 20%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #FF4F57 !important;
+  margin: 0 0 34px !important;
+  padding: 0;
+}
+.react-tabs__tab--selected {
+  background: #fff !important;
+  border-color: #FF4F57 !important;
+  color: #FF4F57 !important;
+  border-radius: 5px 5px 0 0 !important;
+}
+.page-link{
+  color: #000;
 }

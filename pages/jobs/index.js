@@ -8,12 +8,14 @@ import {
   Button,
   NavDropdown,
   Accordion,
+  Card,
 } from "react-bootstrap";
 
 import stylesJobs from "../../styles/Jobs.module.scss";
 import Header from "../components/header";
 import "bootstrap/dist/css/bootstrap.css";
 import Footer from "../components/footer";
+import Link from "next/link";
 
 // import customVirtualTourImg from "../../public/images/custom-virtual-tour.jpg";
 // import customVirtualTourImg2 from "../../public/images/img-10.png";
@@ -33,21 +35,22 @@ export default function index() {
       </section>
 
       <section className={stylesJobs["jobSearchBar"] + " " + ""}>
-       
         <div className={stylesJobs.searchBarWrap}>
-        <Container>
-          <Row>
-            <Col lg="12">
-              <div  className={
+          <Container>
+            <Row>
+              <Col lg="12">
+                <div
+                  className={
                     stylesJobs["sectionTitle"] +
                     " " +
                     stylesJobs["sectionTitleWhite"]
-                  }>
-                <h2> FInd all your Jobs </h2> <p> Praesent sapien massa </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+                  }
+                >
+                  <h2> FInd all your Jobs </h2> <p> Praesent sapien massa </p>
+                </div>
+              </Col>
+            </Row>
+          </Container>
           <Container>
             <div className={stylesJobs.searchBarInnerBox}>
               <Row>
@@ -60,14 +63,14 @@ export default function index() {
                 >
                   <img src="/img/search-interface-symbol.png" alt="autojob" />
                   <div className={stylesJobs.jobsOptions}>
-<h3>Experience</h3>
-<select name="cars" id="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
-</select>
-</div>
+                    <h3>Experience</h3>
+                    <select name="cars" id="cars">
+                      <option value="volvo">1yrs</option>
+                      <option value="saab">2yrs</option>
+                      <option value="mercedes">10yrs</option>
+                      <option value="audi">15yrs</option>
+                    </select>
+                  </div>
                 </Col>
                 <Col
                   lg="3"
@@ -77,17 +80,15 @@ export default function index() {
                   }
                 >
                   <img src="/img/location.png" alt="autojob" />
-<div className={stylesJobs.jobsOptions}>
-<h3>Experience</h3>
-<select name="cars" id="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
-</select>
-</div>
-
-
+                  <div className={stylesJobs.jobsOptions}>
+                    <h3>Skills</h3>
+                    <select name="cars" id="cars">
+                      <option value="volvo">Html</option>
+                      <option value="saab">Css</option>
+                      <option value="mercedes">Sass</option>
+                      <option value="audi">Javascript</option>
+                    </select>
+                  </div>
                 </Col>
                 <Col
                   lg="3"
@@ -98,14 +99,14 @@ export default function index() {
                 >
                   <img src="/img/category.png" alt="autojob" />
                   <div className={stylesJobs.jobsOptions}>
-<h3>Experience</h3>
-<select name="cars" id="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
-</select>
-</div>
+                    <h3>Location</h3>
+                    <select name="cars" id="cars">
+                      <option value="volvo">Kolkata</option>
+                      <option value="saab">Delhi</option>
+                      <option value="mercedes">Hydrabad</option>
+                      <option value="audi">Bangalore</option>
+                    </select>
+                  </div>
                 </Col>
                 <Col lg="2" sm="2">
                   <a href="#" class="btn btn-primary search-btn">
@@ -116,6 +117,404 @@ export default function index() {
             </div>
           </Container>
         </div>
+      </section>
+
+      <section className={stylesJobs["jobListingWrap"] + " " + "blockPadding"}>
+        <Container>
+          <Row>
+            <Col lg="12">
+              <div className={stylesJobs.currentJobs}>
+                <h2>Recent Jobs</h2>
+              </div>
+            </Col>
+
+            <Col lg="4">
+              <div className={stylesJobs.jobListBox}>
+                <div className={stylesJobs.jobListBoxImg}>
+                  <img src="/img/com-1.jpg" alt="autojob" />
+                </div>
+                <h2>Web Developer</h2>
+                <h3>AutoDesk</h3>
+                <span>
+                  <b>Skills: </b> Html, Css, Javascript, angular
+                </span>
+
+                <div className={stylesJobs.jobLocationSal}>
+                  <div className={stylesJobs.jobLocation}>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </div>
+                  <div className={stylesJobs.jobSal}>
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col lg="4">
+              <div className={stylesJobs.jobListBox}>
+                <div className={stylesJobs.jobListBoxImg}>
+                  <img src="/img/com-2.jpg" alt="autojob" />
+                </div>
+                <h2>Web Developer</h2>
+                <h3>Google</h3>
+                <span>
+                  <b>Skills: </b> Html, Css, Javascript, angular
+                </span>
+
+                <div className={stylesJobs.jobLocationSal}>
+                  <div className={stylesJobs.jobLocation}>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </div>
+                  <div className={stylesJobs.jobSal}>
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+
+            <Col lg="4">
+              <div className={stylesJobs.jobListBox}>
+                <div className={stylesJobs.jobListBoxImg}>
+                  <img src="/img/com-3.jpg" alt="autojob" />
+                </div>
+                <h2>Fullstack web developer</h2>
+                <h3>Google</h3>
+                <span>
+                  <b>Skills: </b> Html, Css, Javascript, angular
+                </span>
+
+                <div className={stylesJobs.jobLocationSal}>
+                  <div className={stylesJobs.jobLocation}>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </div>
+                  <div className={stylesJobs.jobSal}>
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      <section className={stylesJobs["stylesTourism"] + " " + "blockPadding"}>
+        <Container>
+          <Row>
+            <Col lg="12">
+              <div className={stylesJobs.currentJobs}>
+                <h2>Best jobs for you</h2>
+              </div>
+            </Col>
+            <Col lg="6">
+              <div className={stylesJobs.allJobs}>
+                <h2>GRAPHIC DESIGNER</h2>
+                <h3>Brand mantra Pvt. Ltd</h3>
+                <h5>Skills : Html, Jquery, React</h5>
+                <div className={stylesJobs.loacExp}>
+                  <span>
+                    {" "}
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </span>
+                  <span>
+                    {" "}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </span>
+                </div>
+                <Link href="/jobdetails">
+                  <a className={stylesJobs["applyNow"]}>
+                    Apply Now
+                  </a>
+                </Link>
+              </div>
+            </Col>
+            <Col lg="6">
+              <div className={stylesJobs.allJobs}>
+                <h2>SOFTWARE ENGINEER</h2>
+                <h3>Brand mantra Pvt. Ltd</h3>
+                <h5>Skills : Html, Jquery, React</h5>
+                <div className={stylesJobs.loacExp}>
+                  <span>
+                    {" "}
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </span>
+                  <span>
+                    {" "}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </span>
+                </div>
+
+                <a href="#!" className={stylesJobs["applyNow"]}>
+                  Apply Now
+                </a>
+              </div>
+            </Col>
+            <Col lg="6">
+              <div className={stylesJobs.allJobs}>
+                <h2>Investment Banker</h2>
+                <h3>Brand mantra Pvt. Ltd</h3>
+                <h5>Skills : Html, Jquery, React</h5>
+                <div className={stylesJobs.loacExp}>
+                  <span>
+                    {" "}
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </span>
+                  <span>
+                    {" "}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </span>
+                </div>
+
+                <a href="#!" className={stylesJobs["applyNow"]}>
+                  Apply Now
+                </a>
+              </div>
+            </Col>
+            <Col lg="6">
+              <div className={stylesJobs.allJobs}>
+                <h2>Financial Analyst</h2>
+                <h3>Brand mantra Pvt. Ltd</h3>
+                <h5>Skills : Html, Jquery, React</h5>
+                <div className={stylesJobs.loacExp}>
+                  <span>
+                    {" "}
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    <p>
+                      <b>Exp : </b> 5Yrs
+                    </p>
+                  </span>
+                  <span>
+                    {" "}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>QBL Park, C40</p>
+                  </span>
+                </div>
+
+                <a href="#!" className={stylesJobs["applyNow"]}>
+                  Apply Now
+                </a>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      <section className={stylesJobs["hotJobs"] + " " + "blockPadding"}>
+        <Container>
+          <Row>
+            <Col lg="12">
+              <div className={stylesJobs.popJob}>
+                <h2>Popular jobs</h2>
+              </div>
+            </Col>
+
+            <Col lg="3">
+              <Card>
+                <Card.Img variant="top" src="/img/graphic-designer.jpg" />
+                <Card.Body>
+                  <Card.Title>Graphic Designer</Card.Title>
+                  <div className={stylesJobs.jobDes}>
+                    <img src="/img/info.png" alt="autojob" />{" "}
+                    <p>Praesent sapien massa, convallis a pellentesque nec</p>
+                  </div>
+                  <div className={stylesJobs.jobLocationNew}>
+                    {" "}
+                    <img src="/img/location.png" alt="autojob" />{" "}
+                    <p>Dallas, United States</p>
+                  </div>
+
+                  <div className={stylesJobs.monthsAgo}>
+                    <span>
+                      {" "}
+                      <img src="/img/calendar.png" alt="autojob" />{" "}
+                      <p> 4 months ago</p>{" "}
+                    </span>
+                    <span>
+                      {" "}
+                      <img
+                        src="/img/three-o-clock-clock.png"
+                        alt="autojob"
+                      />{" "}
+                      <p>Exp : 4 yrs</p>{" "}
+                    </span>
+                  </div>
+                  {/* <Card.Text>
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
+                    </Card.Text> */}
+                  <a
+                    href="!#"
+                    className={
+                      stylesJobs["knowMore"] + " " + stylesJobs["viewDetails"]
+                    }
+                  >
+                    View details
+                  </a>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col lg="3">
+              <Card>
+                <Card.Img variant="top" src="/img/soft-eng.jpg" />
+                <Card.Body>
+                  <Card.Title>SOFTWARE ENGINEER</Card.Title>
+                  <div className={stylesJobs.jobDes}>
+                    <img src="/img/info.png" alt="autojob" />{" "}
+                    <p>Praesent sapien massa, convallis a pellentesque nec</p>
+                  </div>
+                  <div className={stylesJobs.jobLocationNew}>
+                    {" "}
+                    <img src="/img/location.png" alt="autojob" />{" "}
+                    <p>Dallas, United States</p>
+                  </div>
+
+                  <div className={stylesJobs.monthsAgo}>
+                    <span>
+                      {" "}
+                      <img src="/img/calendar.png" alt="autojob" />{" "}
+                      <p> 4 months ago</p>{" "}
+                    </span>
+                    <span>
+                      {" "}
+                      <img
+                        src="/img/three-o-clock-clock.png"
+                        alt="autojob"
+                      />{" "}
+                      <p>Exp : 4 yrs</p>{" "}
+                    </span>
+                  </div>
+                  {/* <Card.Text>
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
+                    </Card.Text> */}
+                  <a
+                    href="!#"
+                    className={
+                      stylesJobs["knowMore"] + " " + stylesJobs["viewDetails"]
+                    }
+                  >
+                    View details
+                  </a>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col lg="3">
+              <Card>
+                <Card.Img variant="top" src="/img/managing-director.jpg" />
+                <Card.Body>
+                  <Card.Title>MANAGING DIRECTOR</Card.Title>
+                  <div className={stylesJobs.jobDes}>
+                    <img src="/img/info.png" alt="autojob" />{" "}
+                    <p>Praesent sapien massa, convallis a pellentesque nec</p>
+                  </div>
+                  <div className={stylesJobs.jobLocationNew}>
+                    {" "}
+                    <img src="/img/location.png" alt="autojob" />{" "}
+                    <p>Dallas, United States</p>
+                  </div>
+
+                  <div className={stylesJobs.monthsAgo}>
+                    <span>
+                      {" "}
+                      <img src="/img/calendar.png" alt="autojob" />{" "}
+                      <p> 4 months ago</p>{" "}
+                    </span>
+                    <span>
+                      {" "}
+                      <img
+                        src="/img/three-o-clock-clock.png"
+                        alt="autojob"
+                      />{" "}
+                      <p>Exp : 4 yrs</p>{" "}
+                    </span>
+                  </div>
+                  {/* <Card.Text>
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
+                    </Card.Text> */}
+                  <a
+                    href="!#"
+                    className={
+                      stylesJobs["knowMore"] + " " + stylesJobs["viewDetails"]
+                    }
+                  >
+                    View details
+                  </a>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col lg="3">
+              <Card>
+                <Card.Img variant="top" src="/img/accountant.jpg" />
+                <Card.Body>
+                  <Card.Title>Senior Accountant</Card.Title>
+                  <div className={stylesJobs.jobDes}>
+                    <img src="/img/info.png" alt="autojob" />{" "}
+                    <p>Praesent sapien massa, convallis a pellentesque nec</p>
+                  </div>
+                  <div className={stylesJobs.jobLocationNew}>
+                    {" "}
+                    <img src="/img/location.png" alt="autojob" />{" "}
+                    <p>Dallas, United States</p>
+                  </div>
+
+                  <div className={stylesJobs.monthsAgo}>
+                    <span>
+                      {" "}
+                      <img src="/img/calendar.png" alt="autojob" />{" "}
+                      <p> 4 months ago</p>{" "}
+                    </span>
+                    <span>
+                      {" "}
+                      <img
+                        src="/img/three-o-clock-clock.png"
+                        alt="autojob"
+                      />{" "}
+                      <p>Exp : 4 yrs</p>{" "}
+                    </span>
+                  </div>
+                  {/* <Card.Text>
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
+                    </Card.Text> */}
+                  <a
+                    href="!#"
+                    className={
+                      stylesJobs["knowMore"] + " " + stylesJobs["viewDetails"]
+                    }
+                  >
+                    View details
+                  </a>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </section>
       <Footer />
     </div>
