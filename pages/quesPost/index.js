@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -21,6 +21,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Footer from "../components/footer";
 import Link from "next/link";
+import { Formik } from 'formik';
+
 
 // import customVirtualTourImg from "../../public/images/custom-virtual-tour.jpg";
 // import customVirtualTourImg2 from "../../public/images/img-10.png";
@@ -31,7 +33,43 @@ export default function index() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [questions, setquestions] = useState();
+  const [comments, setcomments] = useState();
+  const [showcom, setshowcom] = useState();
+  const [replies, setreplies] = useState();
+  const [showrep, setshowrep] = useState();
 
+
+  useEffect(()=>{
+    fetch('https://job-qna.herokuapp.com/v1/question?pageNo=0&pageLimit=30&isActive=true',{
+      headers:{
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      }
+    }).then(async (res)=>{
+      setquestions(await res.json())
+    })
+  },[])
+
+  const fetchComments = (id) => {
+    setshowcom(id);
+    fetch('https://job-qna.herokuapp.com/v1/answer?pageNo=0&pageLimit=30&isActive=true&questionID='+id,{
+      headers:{
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      }
+    }).then(async (res)=>{
+      setcomments(await res.json())
+    })
+  }
+  const fetchReplies = (id) => {
+    setshowrep(id);
+    fetch('https://job-qna.herokuapp.com/v1/comment?pageNo=0&pageLimit=30&isActive=true&questionID='+id,{
+      headers:{
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      }
+      }).then(async (res)=>{
+        setreplies(await res.json())
+      })
+  }
   return (
     <div className="globalWrap">
       <Header />
@@ -49,7 +87,7 @@ export default function index() {
         <Container>
           <Row>
             <Col lg="12">
-              <div className={stylesQuesPost.postTitle}>
+             {/*  <div className={stylesQuesPost.postTitle}>
                 <h2>Intel vs qualcomm and QC offer expectation</h2>
 
                 <div className={stylesQuesPost.postTimeReport}>
@@ -96,11 +134,12 @@ export default function index() {
                   <a href="#">Comments</a>
                   <a href="#">Answer</a>
                 </div>
-              </div>
+              </div> */}
 
+              {questions && questions?.message[0]?.data?.map(ele=>(
               <div className={stylesQuesPost.userComment}>
                 <div className={stylesQuesPost.mainUserComment}>
-                  <h3>Lily Coleman</h3>
+                  <h3>{ele.question}</h3>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -111,14 +150,14 @@ export default function index() {
                     <div className={stylesQuesPost.postTime}>
                       <span>
                         <img src="/img/three-o-clock-clock.png" alt="autojob" />
-                        <h3>3d</h3>
+                        <h3>{Math.floor((new Date() - new Date(ele.createdAt))/ (1000 * 60 * 60 * 24))}d</h3>
                       </span>
                       <span>
                         <img src="/img/like.png" alt="autojob" />
-                        <h3>Like</h3>
+                        <h3>Like  ({ele.likesCount})</h3>
                       </span>
-                      <span>
-                        <img src="/img/comment.png" alt="autojob" />
+                      <span style={{cursor: 'pointer'}} onClick={()=>fetchComments(ele._id)}>
+                        <img src="/img/comment.png" alt="autojob"/>
                         <h3>Comments</h3>
                       </span>
                     </div>
@@ -127,17 +166,139 @@ export default function index() {
                     </a>
                   </div>
                 </div>
+                
+                {showcom==ele._id &&(
+                  <>
+                  <Formik
+                  initialValues={{ emailID: 'roy.srijan@gmail.com', password: 'sfdsfd' }}
+                  onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                      alert(JSON.stringify(values, null, 2));
+                      fetch('https://job-qna.herokuapp.com/v1/answer', {
+                        method: 'POST',
+                        headers:{
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Bearer '+sessionStorage.getItem('token')
+                        },
+                        body: JSON.stringify({...values, questionID: ele._id}, null, 2)
+                      }).then(res=>{
+                        setSubmitting(false);
+                      })
+                      
+                    }, 400);
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    /* and other goodies */
+                  }) => (
+                  <form onSubmit={handleSubmit}>
+                  <div className={stylesQuesPost.postAnswer}>
+                  <textarea name="answer" onChange={handleChange}></textarea>
+                  </div>
+                  <Button type="submit" variant="primary" className={stylesQuesPost.submitRed} disabled={isSubmitting}>Post</Button>
+                  </form>
+                  )}
+                  </Formik>
+                  </>
+                )}
 
-                <div className={stylesQuesPost.mainUserCommentReply}>
-                  <h3>Simona Disa</h3>
-                  <span>3 hours ago</span>
-                  <p>
-                    letters, as opposed to using 'Content here, content here',
-                    making it look like readable English.
+                {comments && showcom==ele._id && comments?.message[0]?.data?.map(cmt=>
+                  (<div className={stylesQuesPost.mainUserCommentReply}>
+                  <h3>{cmt.user_first_name} {cmt.user_last_name}</h3>
+                  <div className={stylesQuesPost.postTimeReport}>
+                    <div className={stylesQuesPost.postTime}>
+                      <span>
+                        <img src="/img/three-o-clock-clock.png" alt="autojob" />
+                        <h3>{Math.floor((new Date() - new Date(cmt.createdAt))/ (1000 * 60 * 60 * 24))}d</h3>
+                      </span>
+                      <span>
+                        <img src="/img/like.png" alt="autojob" />
+                        <h3>Like  ({cmt.likesCount})</h3>
+                      </span>
+                      <span style={{cursor: 'pointer'}} onClick={()=>fetchReplies(cmt._id)}>
+                        <img src="/img/comment.png" alt="autojob"/>
+                        <h3>Comments</h3>
+                      </span>
+                    </div>
+                    <a href="#" className={stylesQuesPost.reposrtAbuseBt}>
+                      Report Abuse
+                    </a>
+                  </div>                  <p>
+                    {cmt.answer}
                   </p>
-                </div>
+                  {showrep==cmt._id &&(
+                  <>
+                  <Formik
+                  initialValues={{ emailID: 'roy.srijan@gmail.com', password: 'sfdsfd' }}
+                  onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                      alert(JSON.stringify(values, null, 2));
+                      fetch('https://job-qna.herokuapp.com/v1/comment', {
+                        method: 'POST',
+                        headers:{
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Bearer '+sessionStorage.getItem('token')
+                        },
+                        body: JSON.stringify({...values, questionID: cmt._id}, null, 2)
+                      }).then(res=>{
+                        setSubmitting(false);
+                      })
+                      
+                    }, 400);
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    /* and other goodies */
+                  }) => (
+                  <form onSubmit={handleSubmit}>
+                  <div className={stylesQuesPost.postAnswer}>
+                  <textarea name="answer" onChange={handleChange}></textarea>
+                  </div>
+                  <Button type="submit" variant="primary" className={stylesQuesPost.submitRed} disabled={isSubmitting}>Post</Button>
+                  </form>
+                  )}
+                  </Formik>
+                  </>
+                )}
 
-                <div className={stylesQuesPost.mainUserCommentReply}>
+                {replies && showrep==cmt._id && replies?.message[0]?.data?.map(rep=>
+                  (<div className={stylesQuesPost.mainUserCommentReply}>
+                  <h3>{rep.user_first_name} {rep.user_last_name}</h3>
+                  <div className={stylesQuesPost.postTimeReport}>
+                    <div className={stylesQuesPost.postTime}>
+                      <span>
+                        <img src="/img/three-o-clock-clock.png" alt="autojob" />
+                        <h3>{Math.floor((new Date() - new Date(rep.createdAt))/ (1000 * 60 * 60 * 24))}d</h3>
+                      </span>
+                      <span>
+                        <img src="/img/like.png" alt="autojob" />
+                        <h3>Like  ({rep.likesCount})</h3>
+                      </span>
+                    </div>
+                    <a href="#" className={stylesQuesPost.reposrtAbuseBt}>
+                      Report Abuse
+                    </a>
+                  </div>                  <p>
+                    {cmt.answer}
+                  </p>
+                </div>))}
+                </div>))}
+
+                {/* <div className={stylesQuesPost.mainUserCommentReply}>
                   <h3>John Smith</h3>
                   <span>10 hours ago</span>
                   <p>
@@ -154,15 +315,16 @@ export default function index() {
                     reproduced below for those interested. Sections 1.10.32 and
                     1.10.33.
                   </p>
-                </div>
+                </div> */}
               </div>
+              ))}
 
               <div className={stylesQuesPost.postAnswerWrap}>
                 <a href="javascript:void(0)" className={stylesQuesPost.postANswerBt} onClick={handleShow}>
                   Post Answer
                 </a>
               </div>
-
+              
            
               <Modal
                 show={show}
@@ -170,12 +332,42 @@ export default function index() {
                 backdrop="static"
                 keyboard={false}
               >
+                <Formik
+                  initialValues={{ emailID: 'roy.srijan@gmail.com', password: 'sfdsfd' }}
+                  onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                      alert(JSON.stringify(values, null, 2));
+                      fetch('https://job-qna.herokuapp.com/v1/question', {
+                        method: 'POST',
+                        headers:{
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Bearer '+sessionStorage.getItem('token')
+                        },
+                        body: JSON.stringify(values, null, 2)
+                      }).then(res=>{
+                        setSubmitting(false);
+                      })
+                      
+                    }, 400);
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    /* and other goodies */
+                  }) => (
+                <form onSubmit={handleSubmit}>
                 <Modal.Header closeButton>
                   <Modal.Title>Type Your Answer</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 <div className={stylesQuesPost.postAnswer}>
-<textarea></textarea>
+<textarea name="question" onChange={handleChange}></textarea>
 </div>
                  
                 </Modal.Body>
@@ -183,9 +375,13 @@ export default function index() {
                   {/* <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button> */}
-                  <Button variant="primary" className={stylesQuesPost.submitRed}>Post</Button>
+                  <Button type="submit" variant="primary" className={stylesQuesPost.submitRed} disabled={isSubmitting}>Post</Button>
                 </Modal.Footer>
+                </form>
+              )}
+              </Formik>
               </Modal>
+              
             </Col>
           </Row>
         </Container>

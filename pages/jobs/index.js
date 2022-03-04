@@ -16,12 +16,34 @@ import Header from "../components/header";
 import "bootstrap/dist/css/bootstrap.css";
 import Footer from "../components/footer";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 // import customVirtualTourImg from "../../public/images/custom-virtual-tour.jpg";
 // import customVirtualTourImg2 from "../../public/images/img-10.png";
 // import customVirtualTourImg3 from "../../public/images/img-11.png";
 
 export default function index() {
+  const [recentjobs, setrecentjobs] = useState();
+  const [bestjobs, setbestjobs] = useState();
+  const [popularjobs, setpopularjobs] = useState();
+  useEffect(()=>{
+    if(document.location.search){
+      sessionStorage.setItem('token', document.location.search.split('=')[1])
+    }
+    fetch('https://job-qna.herokuapp.com/v1/job?pageNo=0&pageLimit=30&expired=false&&recent=true',{
+      headers:{
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      }
+    }).then(async (res)=>{
+      setrecentjobs(await res.json())
+    })
+    fetch('https://job-qna.herokuapp.com/v1/job?pageNo=0&pageLimit=30&expired=false&&isFeatured=true').then(async (res)=>{
+      setbestjobs(await res.json())
+    })
+    fetch('https://job-qna.herokuapp.com/v1/job?pageNo=0&pageLimit=30&expired=false').then(async (res)=>{
+      setpopularjobs(await res.json())
+    })
+  },[]);
   return (
     <div className="globalWrap">
       <Header />
@@ -128,31 +150,36 @@ export default function index() {
               </div>
             </Col>
 
+            {recentjobs && recentjobs?.message[0]?.data.map(ele=>(
             <Col lg="4">
+              <Link href={"/jobdetails"}>
+              <a style={{textDecoration: 'none'}} onClick={()=>sessionStorage.setItem('job',JSON.stringify(ele))}> 
               <div className={stylesJobs.jobListBox}>
                 <div className={stylesJobs.jobListBoxImg}>
                   <img src="/img/com-1.jpg" alt="autojob" />
                 </div>
-                <h2>Web Developer</h2>
-                <h3>AutoDesk</h3>
+                <h2>{ele.jobTitle}</h2>
+                <h3>{ele.company}</h3>
                 <span>
-                  <b>Skills: </b> Html, Css, Javascript, angular
+                  <b>Skills: </b> {ele.domain}
                 </span>
 
                 <div className={stylesJobs.jobLocationSal}>
                   <div className={stylesJobs.jobLocation}>
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    <p>QBL Park, C40</p>
+                    <p>{ele.location}</p>
                   </div>
                   <div className={stylesJobs.jobSal}>
                     <i class="fa fa-id-card" aria-hidden="true"></i>
                     <p>
-                      <b>Exp : </b> 5Yrs
+                      <b>Exp : </b> {ele.noOfYearsExperience}Yrs
                     </p>
                   </div>
                 </div>
               </div>
-            </Col>
+              </a> 
+              </Link>
+            </Col>))}
             <Col lg="4">
               <div className={stylesJobs.jobListBox}>
                 <div className={stylesJobs.jobListBoxImg}>
@@ -216,32 +243,33 @@ export default function index() {
                 <h2>Best jobs for you</h2>
               </div>
             </Col>
-            <Col lg="6">
+            {bestjobs && bestjobs?.message[0]?.data.map(ele=>
+            (<Col lg="6">
               <div className={stylesJobs.allJobs}>
-                <h2>GRAPHIC DESIGNER</h2>
-                <h3>Brand mantra Pvt. Ltd</h3>
-                <h5>Skills : Html, Jquery, React</h5>
+                <h2>{ele.jobTitle}</h2>
+                <h3>{ele.company}</h3>
+                <h5>Skills : {ele.domain}</h5>
                 <div className={stylesJobs.loacExp}>
                   <span>
                     {" "}
                     <i class="fa fa-id-card" aria-hidden="true"></i>
                     <p>
-                      <b>Exp : </b> 5Yrs
+                      <b>Exp : </b> {ele.noOfYearsExperience}Yrs
                     </p>
                   </span>
                   <span>
                     {" "}
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    <p>QBL Park, C40</p>
+                    <p>{ele.location}</p>
                   </span>
                 </div>
                 <Link href="/jobdetails">
-                  <a className={stylesJobs["applyNow"]}>
+                  <a className={stylesJobs["applyNow"]} onClick={()=>sessionStorage.setItem('job',JSON.stringify(ele))}>
                     Apply Now
                   </a>
                 </Link>
               </div>
-            </Col>
+            </Col>))}
             <Col lg="6">
               <div className={stylesJobs.allJobs}>
                 <h2>SOFTWARE ENGINEER</h2>
@@ -330,26 +358,27 @@ export default function index() {
               </div>
             </Col>
 
-            <Col lg="3">
+            {popularjobs && popularjobs?.message[0]?.data.map(ele=>ele.applicantsCount>0 &&
+              (<Col lg="3">
               <Card>
                 <Card.Img variant="top" src="/img/graphic-designer.jpg" />
                 <Card.Body>
-                  <Card.Title>Graphic Designer</Card.Title>
+                  <Card.Title>{ele.jobTitle}</Card.Title>
                   <div className={stylesJobs.jobDes}>
                     <img src="/img/info.png" alt="autojob" />{" "}
-                    <p>Praesent sapien massa, convallis a pellentesque nec</p>
+                    <p>{ele.company}</p>
                   </div>
                   <div className={stylesJobs.jobLocationNew}>
                     {" "}
                     <img src="/img/location.png" alt="autojob" />{" "}
-                    <p>Dallas, United States</p>
+                    <p>{ele.location}</p>
                   </div>
 
                   <div className={stylesJobs.monthsAgo}>
                     <span>
                       {" "}
                       <img src="/img/calendar.png" alt="autojob" />{" "}
-                      <p> 4 months ago</p>{" "}
+                      <p> {ele.ttl} ago</p>{" "}
                     </span>
                     <span>
                       {" "}
@@ -357,24 +386,27 @@ export default function index() {
                         src="/img/three-o-clock-clock.png"
                         alt="autojob"
                       />{" "}
-                      <p>Exp : 4 yrs</p>{" "}
+                      <p>Exp : {ele.noOfYearsExperience} yrs</p>{" "}
                     </span>
                   </div>
                   {/* <Card.Text>
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </Card.Text> */}
+                  <Link href="/jobdetails"> 
                   <a
                     href="!#"
                     className={
                       stylesJobs["knowMore"] + " " + stylesJobs["viewDetails"]
                     }
+                    onClick={()=>sessionStorage.setItem('job',JSON.stringify(ele))}
                   >
                     View details
                   </a>
+                  </Link> 
                 </Card.Body>
               </Card>
-            </Col>
+            </Col>))}
 
             <Col lg="3">
               <Card>

@@ -15,12 +15,17 @@ import stylesJobsDetails from "../../styles/Jobdetails.module.scss";
 import Header from "../components/header";
 import "bootstrap/dist/css/bootstrap.css";
 import Footer from "../components/footer";
+import { useEffect, useState } from "react";
 
 // import customVirtualTourImg from "../../public/images/custom-virtual-tour.jpg";
 // import customVirtualTourImg2 from "../../public/images/img-10.png";
 // import customVirtualTourImg3 from "../../public/images/img-11.png";
 
 export default function index() {
+  const [jobdetails, setJobdetails] = useState()
+  useEffect(()=>{
+    setJobdetails(JSON.parse(sessionStorage.getItem('job')));
+  },[])
   return (
     <div className="globalWrap">
       <Header />
@@ -42,34 +47,25 @@ export default function index() {
             <Col lg="12">
               <div className={stylesJobsDetails.jobDetailsBox}>
              
-                <h2>Front End Developer</h2>
+                <h2>{jobdetails?.jobTitle}</h2>
                 <div className={stylesJobsDetails.companyName}>
                   <span>
                     <i class="fa fa-building" aria-hidden="true"></i>{" "}
-                    <p>Google</p>
+                    <p>{jobdetails?.company}</p>
                   </span>
                   <span>
                     <i class="fa fa-map-marker" aria-hidden="true"></i>{" "}
-                    <p>United Kingdom</p>
+                    <p>{jobdetails?.location}</p>
                   </span>
                 </div>
                 <div className={stylesJobsDetails.jobDetailsContent}>
                   <p>
-                    At Vero Eos Et Accusamus Et Iusto Odio Dignissimos Ducimus
-                    Qui Blanditiis Praesentium Voluptatum Deleniti Atque
-                    Corrupti Quos Dolores Et Quas Molestias Excepturi Sint
-                    Occaecati Cupiditate Non Provident, Similique Sunt In Culpa
-                    Qui Officia Deserunt Mollitia Animi, Id Est Laborum Et
-                    Dolorum Fuga. <br></br>
-                    <br></br> Et Harum Quidem Rerum Facilis Est Et Expedita
-                    Distinctio. Nam Libero Tempore, Cum Soluta Nobis Est
-                    Eligendi Optio Cumque Nihil Impedit Quo Minus Id Quod Maxime
-                    Placeat Facere Possimus.
+                    {jobdetails?.jobCreationStatus}
                   </p>
 
                   <b>Skills</b>
                   <div className={stylesJobsDetails.skills}>
-                    <span>Css3</span>
+                    {jobdetails?.domain.split(', ').map(ele=><span>{ele}</span>)}
                     <span>Html5</span>
                     <span>Photoshop</span>
                     <span>Wordpress</span>
@@ -89,12 +85,12 @@ export default function index() {
                   <b>Contact information</b>
                    <div className={stylesJobsDetails.contactInfo}>
                     <span><i class="fa fa-phone" aria-hidden="true"></i> <p>+91 215 245 6584</p></span>
-                    <span><i class="fa fa-envelope" aria-hidden="true"></i> <p>autojob@gmail.com</p></span>
+                    <span><i class="fa fa-envelope" aria-hidden="true"></i> <p>{jobdetails?.emailIDRevealed}</p></span>
                     <span><i class="fa fa-skype" aria-hidden="true"></i><p>AutojobAdmin</p></span>
                   
                   </div>
 
-                  <a href="!#" className={stylesJobsDetails.applyJobBt}>
+                  <a href={jobdetails?.link} className={stylesJobsDetails.applyJobBt}>
                    Apply for this job
                   </a>
                 </div>
